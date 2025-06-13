@@ -37,13 +37,20 @@ jobs:
         mkdir -p openwrt-sdk/package/network/services/opennds/files/etc/uci-defaults
         cp files/etc/uci-defaults/99-opennds-default openwrt-sdk/package/network/services/opennds/files/etc/uci-defaults/
 
-    - name: Prepare .config
+    - name: Prepare .config and install deps
+      working-directory: ./openwrt-sdk
       run: |
-        cd openwrt-sdk
-        echo 'CONFIG_PACKAGE_opennds=m' >> .config
-        echo 'CONFIG_LIBMICROHTTPD_NO_SSL=y' >> .config
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
+        echo "CONFIG_PACKAGE_opennds=y" > .config
         make defconfig
-
+        
+    - name: Install missing package dependencies
+      working-directory: ./openwrt-sdk
+      run: |
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
+          
     - name: Compile openNDS only
       run: |
         cd openwrt-sdk
