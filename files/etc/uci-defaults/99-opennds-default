@@ -1,0 +1,14 @@
+#!/bin/sh
+
+uci batch <<EOF
+set opennds.@config[0]=opennds
+set opennds.@config[0].enabled='1'
+set opennds.@config[0].interface='br-lan'
+set opennds.@config[0].authmode='radius'
+set opennds.@config[0].radiusserver1='192.168.1.10'
+set opennds.@config[0].radiussecret='testing123'
+set opennds.@config[0].sessiontimeout='3600'
+commit opennds
+EOF
+
+exit 0
