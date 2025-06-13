@@ -32,7 +32,7 @@ jobs:
           make package/opennds/compile V=s
 
       - name: Upload .ipk
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: opennds-ipk
           path: sdk/bin/packages/x86_64/base/opennds_*.ipk
